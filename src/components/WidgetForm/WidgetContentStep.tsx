@@ -8,11 +8,13 @@ import { ScreenshotButton } from "../ScreenshotButton";
 interface WidgetContentStepProps {
   feedbackType: FeedbackType;
   onRestartFeedbackRequested: () => void;
+  onFeedbackSent: () => void;
 }
 
 export function WidgetContentStep({
   feedbackType,
   onRestartFeedbackRequested,
+  onFeedbackSent,
 }: WidgetContentStepProps) {
   const feedbackTypeInfo = feedbackTypes[feedbackType];
 
@@ -26,6 +28,8 @@ export function WidgetContentStep({
   function handleSubmitFeedback(e: FormEvent) {
     e.preventDefault();
     console.log("Submitting feedback", message, screenshot);
+
+    onFeedbackSent();
   }
 
   return (
