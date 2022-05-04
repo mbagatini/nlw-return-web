@@ -18,7 +18,7 @@ export function WidgetContentStep({
 
   const [screenshot, setScreenshot] = useState<string | null>(null);
 
-  function handleScreenshotTaken(screenshot: string) {
+  function handleScreenshotTaken(screenshot: string | null) {
     setScreenshot(screenshot);
   }
 
@@ -52,7 +52,10 @@ export function WidgetContentStep({
         />
 
         <footer className="flex gap-2 mt-2">
-          <ScreenshotButton onScreenshotTaken={handleScreenshotTaken} />
+          <ScreenshotButton
+            screenshot={screenshot}
+            onScreenshotTaken={handleScreenshotTaken}
+          />
 
           <button
             type="submit"
