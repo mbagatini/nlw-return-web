@@ -4,6 +4,8 @@ import { ArrowLeft } from "phosphor-react";
 import { FeedbackType, feedbackTypes } from ".";
 import { CloseButton } from "../CloseButton";
 import { ScreenshotButton } from "../ScreenshotButton";
+import { api } from "../../libs/api";
+import { Loading } from "../Loading";
 
 interface WidgetContentStepProps {
   feedbackType: FeedbackType;
@@ -20,15 +22,24 @@ export function WidgetContentStep({
 
   const [screenshot, setScreenshot] = useState<string | null>(null);
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleScreenshotTaken(screenshot: string | null) {
     setScreenshot(screenshot);
   }
 
-  function handleSubmitFeedback(e: FormEvent) {
+  async function handleSubmitFeedback(e: FormEvent) {
     e.preventDefault();
-    console.log("Submitting feedback", message, screenshot);
+    setIsSubmitting(true);
+    console.log("Submitting feedback: ", message, screenshot);
 
+    await api.post("/feedbacks", {
+      type: feedbackType,
+      comment: message,
+      screenshot,
+    });
+
+    setIsSubmitting(false);
     onFeedbackSent();
   }
 
@@ -72,9 +83,9 @@ export function WidgetContentStep({
           <button
             type="submit"
             className="p-2 bg-brand-500 rounded-md border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
-            disabled={!message.length}
+            disabled={!message.length || isSubmitting}
           >
-            Enviar
+            {isSubmitting ? <Loading /> : "Enviar feedback"}
           </button>
         </footer>
       </form>
