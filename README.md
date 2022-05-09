@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://rocketseat.com.br">
-    <img alt="Made by Rocketseat" src="https://img.shields.io/badge/made%20by-Rocketseat-%2304D361">
+    <img alt="NLW" src="https://img.shields.io/badge/NLW-08-%2304D361">
   </a>
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
